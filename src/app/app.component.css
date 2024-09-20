@@ -1,0 +1,55 @@
+.game-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.players-container{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.player{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.player-cards{
+    height: 75px;
+    width: 45px;
+    margin: 25px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-input{
+    width: 150px;
+    height: 35px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.play-input{
+    background-color: #1F93DE;
+    color: white;
+}
+
+
+.play-input:hover{
+    background-color: #0074BE;
+}
+
+.retry-input{
+    background-color: #0EC550;
+    color: white;
+}
+
+.retry-input:hover{
+    background-color: #008832;
+}
