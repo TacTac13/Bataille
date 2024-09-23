@@ -1,0 +1,13 @@
+<div class="dialog-container">
+  <div *ngIf="!data.equality; else equality">
+    <h2>Partie terminée: {{ winner$ | async }} gagne la partie</h2>
+  </div>
+
+  <ng-template #equality>
+    <h2>Equalité !!! Veuillez recommencer !</h2>
+  </ng-template>
+
+  <div>
+    <button mat-raised-button color="primary" class="game-input" mat-dialog-close>Rejouer !</button>
+  </div>
+</div>

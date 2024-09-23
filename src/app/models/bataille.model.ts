@@ -13,3 +13,7 @@ export class Player {
         this.score = 0;
     }
 }
+
+export interface DialogData {
+  equality: boolean;
+}

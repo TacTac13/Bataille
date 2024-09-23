@@ -6,22 +6,14 @@
     <app-player [cardPlayer]="cardPlayer2" [player]="player2"></app-player>
   </div>
 
-  <button class="game-input play-input" *ngIf="player1.cards.length > 0 && player2.cards.length > 0; else endGame"
-    (click)="playRound()">Jouer !
+  <button mat-raised-button color="primary" class="game-input"
+    *ngIf="player1.cards.length > 0 && player2.cards.length > 0" (click)="playRound()">Jouer !
   </button>
-  <ng-template #endGame>
-    <button class="game-input retry-input" (click)="retry()">Rejouer !</button>
-  </ng-template>
+
 
   <div *ngIf="winner$ | async">
-    <h2 *ngIf="player1.cards.length > 0 && player2.cards.length > 0; else endGame">{{ winner$ | async }} marque 1 point
-    </h2>
-    <ng-template #endGame>
-      <h2>Partie terminée: {{ winner$ | async }} gagne la partie</h2>
-    </ng-template>
+    <h2 *ngIf="player1.cards.length > 0 && player2.cards.length > 0">{{ winner$ | async }} marque 1 point</h2>
   </div>
 
-  <div *ngIf="equality">
-    <h2>Equalité !!! Veuillez recommencer !</h2>
-  </div>
+
 </div>
