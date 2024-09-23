@@ -6,25 +6,10 @@
 }
 
 .players-container{
-    width: 100%;
+    width: 30%;
+    height: 250px;
     display: flex;
     justify-content: space-around;
-}
-
-.player{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.player-cards{
-    height: 75px;
-    width: 45px;
-    margin: 25px;
-    border: 1px solid black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .game-input{

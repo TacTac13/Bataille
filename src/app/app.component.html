@@ -1,43 +1,27 @@
 <div class="game-container">
-    <h2>Bataille</h2>
-    <div class="players-container">
-        <div class="player">
-            <div class="player-info">
-                <h3>{{ player1.name }}</h3>
-                <p>Score: {{ player1.score }}</p>
-            </div>
-            <div *ngIf="cardPlayer1" class="player-cards">
-                <p ><b>{{cardPlayer1.value}}</b></p>
-            </div>
-        </div>
+  <h1>Bataille</h1>
 
-        <div class="player">
-            <div *ngIf="cardPlayer2" class="player-cards">
-                <p ><b>{{cardPlayer2.value}}</b></p>
-            </div>
-            <div >
-                <h3>{{ player2.name }}</h3>
-                <p>Score: {{ player2.score }}</p>
-            </div>
-        </div>
-    </div>
+  <div class="players-container">
+    <app-player [cardPlayer]="cardPlayer1" [player]="player1"></app-player>
+    <app-player [cardPlayer]="cardPlayer2" [player]="player2"></app-player>
+  </div>
 
-    <button class="game-input play-input"
-            *ngIf="player1.cards.length > 0 && player2.cards.length > 0; else endGame"
-            (click)="playRound()">Jouer !
-    </button>
+  <button class="game-input play-input" *ngIf="player1.cards.length > 0 && player2.cards.length > 0; else endGame"
+    (click)="playRound()">Jouer !
+  </button>
+  <ng-template #endGame>
+    <button class="game-input retry-input" (click)="retry()">Rejouer !</button>
+  </ng-template>
+
+  <div *ngIf="winner$ | async">
+    <h2 *ngIf="player1.cards.length > 0 && player2.cards.length > 0; else endGame">{{ winner$ | async }} marque 1 point
+    </h2>
     <ng-template #endGame>
-        <button class="game-input retry-input"   (click)="retry()">Rejouer !</button>
+      <h2>Partie terminée: {{ winner$ | async }} gagne la partie</h2>
     </ng-template>
+  </div>
 
-    <div *ngIf="winner$ | async">
-        <h2 *ngIf="player1.cards.length > 0 && player2.cards.length > 0; else endGame">{{ winner$ | async }} marque 1 point</h2>
-        <ng-template #endGame>
-            <h2>Partie terminée: {{ winner$ | async }} gagne la partie</h2>
-        </ng-template>
-    </div>
-
-    <div *ngIf="equality">
-        <h2>Equalité !!! Veuillez recommencer !</h2>
-    </div>
+  <div *ngIf="equality">
+    <h2>Equalité !!! Veuillez recommencer !</h2>
+  </div>
 </div>

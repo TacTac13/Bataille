@@ -1,0 +1,7 @@
+<div class="player">
+  <h3>{{ player.name }}</h3>
+  <p>Score: {{ player.score }}</p>
+  <div *ngIf="cardPlayer" class="player-cards">
+    <p><b>{{cardPlayer.value}}</b></p>
+  </div>
+</div>
