@@ -1,0 +1,14 @@
+.dialog-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 50px;
+  background-color: #4b96d4;border: 2px solid white;
+}
+
+.buttons-container{
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}

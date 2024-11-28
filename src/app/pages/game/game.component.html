@@ -1,0 +1,40 @@
+<div class="game-container">
+  <div class="battle-container" *ngIf="!isPlayersLoading && player1Id && player2Id">
+    <h1>Bataille</h1>
+
+    <div class="players-container">
+      <app-player [cardPlayer]="cardPlayer1" [player]="player1"></app-player>
+      <app-player [cardPlayer]="cardPlayer2" [player]="player2"></app-player>
+    </div>
+
+    <button mat-raised-button class="game-input" *ngIf="player1.cards.length > 0 && player2.cards.length > 0"
+      (click)="playRound()">Jouer !
+    </button>
+
+
+    <div *ngIf="winner">
+      <h2 *ngIf="player1.cards.length > 0 && player2.cards.length > 0">{{ winner }} marque 1 point</h2>
+    </div>
+  </div>
+
+  <div *ngIf="isPlayersLoading" class="loading">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+
+
+  <div *ngIf="!isPlayersLoading && !player1Id && !player2Id" class="player-form-container">
+    <h2>Veuillez reseigner le nom des participants</h2>
+    <form [formGroup]="playersForm" class="player-form">
+      <mat-form-field>
+        <mat-label>Joueur 1</mat-label>
+        <input matInput type="text" formControlName="player1">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Joueur 2</mat-label>
+        <input matInput type="text" formControlName="player2">
+      </mat-form-field>
+    </form>
+    <button mat-raised-button class="game-input" [disabled]="!playersForm.valid"
+      (click)="savePlayers()">Valider</button>
+  </div>
+</div>

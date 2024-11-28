@@ -1,0 +1,24 @@
+<div class="main-container">
+  <h1>SCORES</h1>
+  <div *ngIf="isScoresLoading" class="loading">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+  <div *ngIf="!isScoresLoading" class="scores-container">
+    <div *ngFor="let score of scoresList" class="scores-list">
+      <div [ngClass]="{'winner': score.scores[0].score > score.scores[1].score, 'player-score' : true }">
+        <mat-icon *ngIf="score.scores[0].score > score.scores[1].score" fontIcon="stars"></mat-icon>
+        <p>{{ getPlayerName(score.scores[0].playerId) }} :</p>
+        <span>{{
+          score.scores[0].score}}</span>
+      </div>
+      <div [ngClass]="{'winner': score.scores[1].score > score.scores[0].score, 'player-score' : true }">
+        <mat-icon *ngIf="score.scores[1].score > score.scores[0].score" fontIcon="stars"></mat-icon>
+        <p>{{ getPlayerName(score.scores[1].playerId) }} :</p>
+        <span>{{ score.scores[1].score}}</span>
+      </div>
+    </div>
+  </div>
+
+  <button mat-raised-button class="lets-play-input" [routerLink]="['/game']">Let's play !!!
+  </button>
+</div>

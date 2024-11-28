@@ -1,0 +1,20 @@
+.player {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .player-cards {
+      height: 85px;
+      width: 58px;
+      margin: 25px;
+      border-radius: 10px;
+      font-size: 20px;
+      background-color: #ac246e;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+}
+
+

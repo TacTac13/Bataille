@@ -1,17 +1,36 @@
-export interface Card {
-    value: number;
+export interface GamesModel {
+  id: number;
+  scores: ScoresModel[]
 }
 
-export class Player {
-    name: string;
-    cards: Card[];
-    score: number;
+export interface ScoresModel {
+  playerId: number;
+  score: number
+}
 
-    constructor(name: string, cards: Card[]) {
-        this.name = name;
-        this.cards = cards;
-        this.score = 0;
-    }
+export interface PlayerModel {
+  id: number;
+  name: string
+}
+
+export interface PlayersRequestModel {
+  name: string
+}
+
+export interface Card {
+  value: number;
+}
+
+export class GamePlayerModel {
+  name: string;
+  cards: Card[];
+  score: number;
+
+  constructor(name: string, cards: Card[]) {
+    this.name = name;
+    this.cards = cards;
+    this.score = 0;
+  }
 }
 
 export interface DialogData {

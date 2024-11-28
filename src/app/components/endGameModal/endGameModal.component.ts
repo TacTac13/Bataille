@@ -7,7 +7,7 @@ import { DialogData } from 'src/app/models/bataille.model';
 @Component({
   selector: 'app-end-game-modal',
   templateUrl: 'endGameModal.component.html',
-  styleUrls: ['./endGameModal.component.css'],
+  styleUrls: ['./endGameModal.component.scss'],
 })
 export class EndGameModalComponent {
 

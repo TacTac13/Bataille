@@ -7,7 +7,8 @@
     <h2>Equalité !!! Veuillez recommencer !</h2>
   </ng-template>
 
-  <div>
-    <button mat-raised-button color="primary" class="game-input" mat-dialog-close>Rejouer !</button>
+  <div class="buttons-container">
+    <button mat-raised-button class="game-input" [routerLink]="['/']" mat-dialog-close>Tableau des scores</button>
+    <button mat-raised-button class="game-input" mat-dialog-close>Rejouer !</button>
   </div>
 </div>

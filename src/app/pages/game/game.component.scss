@@ -1,0 +1,47 @@
+.game-container{
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  .battle-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .players-container {
+        width: 30%;
+        height: 250px;
+        display: flex;
+        justify-content: space-around;
+      }
+    .game-input {
+      width: 150px;
+      height: 35px;
+    }
+  }
+  .loading {
+    width: 30%;
+  }
+  .player-form-container {
+    width: 40%;
+    text-align: center;
+    .player-form {
+      display: flex;
+      justify-content: space-around;
+    }
+  }
+}
+
+.mat-mdc-progress-bar {
+  --mdc-linear-progress-active-indicator-color: #ffffff;
+}
+
+
+
+
+
+

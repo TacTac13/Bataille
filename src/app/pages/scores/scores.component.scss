@@ -1,0 +1,56 @@
+.main-container{
+  h1{
+    font-size: 40px;
+  }
+  width: 100%;
+  height: calc(100vh - 20px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .loading{
+    width: 30%;
+  }
+  .scores-container{
+    width: 40%;
+    max-height: 600px;
+      overflow: auto;
+    .scores-list{
+    display: flex;
+    justify-content: space-between;
+    .player-score{
+      mat-icon{
+        position: absolute;
+        left: 0;
+        margin-top: 4px;
+        margin-left: 5px;
+      }
+      position: relative;
+      margin: 5px 0;
+      display: flex;
+      align-items: center;
+      padding: 10px 35px;
+      font-size: 23px;
+      font-weight: bold;
+      p{
+        margin: 0;
+        padding-right: 20px;
+      }
+    }
+    .winner{
+      background-color: #ffffff;
+      color: #4b96d4;
+    }
+  }
+  }
+  .lets-play-input{
+    margin-top: 25px;
+    background-color: #ffffff;
+    color: #4b96d4;
+    font-weight: bold;
+  }
+}
+
+.mat-mdc-progress-bar {
+  --mdc-linear-progress-active-indicator-color: #ffffff;
+}

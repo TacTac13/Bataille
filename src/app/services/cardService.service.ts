@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Card, Player } from '../models/bataille.model';
+import { Card, GamePlayerModel } from '../models/bataille.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -20,27 +20,25 @@ export class CardService {
     return deck;
   }
 
-  deal(cards: Card[]): [Player, Player] {                         // Distribution des cartes aux joueurs
+  deal(cards: Card[], player1Name: string, player2name: string): [GamePlayerModel, GamePlayerModel] {// Distribution des cartes aux joueurs
     const halfDeck: number = Math.ceil(cards.length / 2);
     const player1Deck: Card[] = cards.slice(0, halfDeck);
     const player2Deck: Card[] = cards.slice(halfDeck);
 
-    const player1: Player = new Player('Joueur 1', player1Deck);
-    const player2: Player = new Player('Joueur 2', player2Deck);
+    const player1: GamePlayerModel = new GamePlayerModel(player1Name, player1Deck);
+    const player2: GamePlayerModel = new GamePlayerModel(player2name, player2Deck);
 
     return [player1, player2];
   }
 
-  playRound(player1: Player, player2: Player) {
+  playRound(player1: GamePlayerModel, player2: GamePlayerModel) {
     const card1: Card | undefined = player1.cards.shift();
     const card2: Card | undefined = player2.cards.shift();
     if (card1 && card2) {                                 // Partie en cours, les joueurs peuvent continuer à jouer
       if (card1.value > card2.value) {
         player1.score++;
-        this.winnerSubject.next(player1.name);
       } else {
         player2.score++;
-        this.winnerSubject.next(player2.name);
       }
       if (player1.cards.length === 0 && player2.cards.length === 0) {    // Fin de partie et determination du gagnant
         player1.score > player2.score ? this.winnerSubject.next(player1.name) : this.winnerSubject.next(player2.name);
