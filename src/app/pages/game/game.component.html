@@ -1,5 +1,5 @@
 <div class="game-container">
-  <div class="battle-container" *ngIf="!isPlayersLoading && player1Id && player2Id">
+  <div class="battle-container" *ngIf="!isPlayersLoading && player1 && player2">
     <h1>Bataille</h1>
 
     <div class="players-container">
@@ -10,11 +10,6 @@
     <button mat-raised-button class="game-input" *ngIf="player1.cards.length > 0 && player2.cards.length > 0"
       (click)="playRound()">Jouer !
     </button>
-
-
-    <div *ngIf="winner">
-      <h2 *ngIf="player1.cards.length > 0 && player2.cards.length > 0">{{ winner }} marque 1 point</h2>
-    </div>
   </div>
 
   <div *ngIf="isPlayersLoading" class="loading">
@@ -22,7 +17,7 @@
   </div>
 
 
-  <div *ngIf="!isPlayersLoading && !player1Id && !player2Id" class="player-form-container">
+  <div *ngIf="!isPlayersLoading && !player1 && !player2" class="player-form-container">
     <h2>Veuillez reseigner le nom des participants</h2>
     <form [formGroup]="playersForm" class="player-form">
       <mat-form-field>

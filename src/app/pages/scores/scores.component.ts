@@ -2,6 +2,7 @@ import { Component, type OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { combineLatest } from 'rxjs';
 import { GamesModel, PlayerModel } from 'src/app/models/bataille.model';
+import { BattleActions } from 'src/app/store/battle.action';
 import { BattleState } from 'src/app/store/battle.state';
 import { LoadingState } from 'src/app/store/loading.state';
 
@@ -21,6 +22,7 @@ export class ScoresComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.store.dispatch(new BattleActions.ResetPlayers());
     combineLatest([
       this.store.select(BattleState.games),
       this.store.select(BattleState.players),

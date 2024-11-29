@@ -3,20 +3,24 @@ import { Action, NgxsOnInit, Selector, State, StateContext, Store } from "@ngxs/
 import { BattleActions } from "./battle.action";
 import { catchError, Observable, tap } from "rxjs";
 import { BattleService } from "../services/battleService.service";
-import { GamesModel, PlayerModel, ScoresModel } from "../models/bataille.model";
+import { GamePlayerModel, GamesModel, PlayerModel, PlayerNumber, ScoresModel } from "../models/bataille.model";
 import { LoadingActions } from "./loading.action";
 import { MatSnackBar } from "@angular/material/snack-bar";
 
 interface BattleStateModel {
   games: GamesModel[],
-  players: PlayerModel[]
+  players: PlayerModel[],
+  player1: GamePlayerModel | undefined
+  player2: GamePlayerModel | undefined
 }
 
 @State<BattleStateModel>({
   name: 'Battle_state',
   defaults: {
     games: [],
-    players: []
+    players: [],
+    player1: undefined,
+    player2: undefined,
   }
 })
 
@@ -38,6 +42,16 @@ export class BattleState implements NgxsOnInit {
   @Selector()
   static players(model: BattleStateModel): PlayerModel[] {
     return model.players;
+  }
+
+  @Selector()
+  static player1(model: BattleStateModel): GamePlayerModel | undefined {
+    return model.player1;
+  }
+
+  @Selector()
+  static player2(model: BattleStateModel): GamePlayerModel | undefined {
+    return model.player2;
   }
 
 
@@ -90,13 +104,21 @@ export class BattleState implements NgxsOnInit {
   }
 
   @Action(BattleActions.AddPlayer)
-  addPlayer(ctx: StateContext<BattleStateModel>, { player }: BattleActions.AddPlayer): Observable<PlayerModel> {
+  addPlayer(ctx: StateContext<BattleStateModel>, { player, playerNumber }: BattleActions.AddPlayer): Observable<PlayerModel> {
     return this.battleService.addPlayers(player).pipe(
       tap((playerResponse: PlayerModel) => {
         const state = ctx.getState();
+        const newPlayer: GamePlayerModel = {
+          id: playerResponse.id,
+          name: playerResponse.name,
+          cards: [],
+          score: 0
+        }
         ctx.setState({
           ...state,
-          players: [...state.players, playerResponse]
+          players: [...state.players, playerResponse],
+          player1: playerNumber === PlayerNumber.PLAYER1 ? newPlayer : state.player1,
+          player2: playerNumber === PlayerNumber.PLAYER2 ? newPlayer : state.player2
         });
       }),
       catchError(error => {
@@ -129,6 +151,14 @@ export class BattleState implements NgxsOnInit {
         throw error;
       })
     );
+  }
+
+  @Action(BattleActions.ResetPlayers)
+  resetPlayer(ctx: StateContext<BattleStateModel>) {
+    ctx.patchState({
+      player1: undefined,
+      player2: undefined
+    });
   }
 
 

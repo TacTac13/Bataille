@@ -1,4 +1,4 @@
-import { PlayerModel, PlayersRequestModel, ScoresModel } from "../models/bataille.model";
+import { PlayerModel, PlayerNumber, PlayersRequestModel, ScoresModel } from "../models/bataille.model";
 
 const ACTION_SCOPE = '[BATTLE] -';
 
@@ -15,7 +15,7 @@ export namespace BattleActions {
   export class AddPlayer {
     static readonly type = `${ACTION_SCOPE} Add player`;
     constructor(
-      public player: PlayersRequestModel
+      public player: PlayersRequestModel, public playerNumber: PlayerNumber
     ) { }
   }
 
@@ -24,5 +24,9 @@ export namespace BattleActions {
     constructor(
       public scores: ScoresModel[]
     ) { }
+  }
+
+  export class ResetPlayers {
+    static readonly type = `${ACTION_SCOPE} Reset player1 and player2`;
   }
 }

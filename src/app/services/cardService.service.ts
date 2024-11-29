@@ -20,13 +20,13 @@ export class CardService {
     return deck;
   }
 
-  deal(cards: Card[], player1Name: string, player2name: string): [GamePlayerModel, GamePlayerModel] {// Distribution des cartes aux joueurs
+  deal(cards: Card[], gamePlayer1: GamePlayerModel, gamePlayer2: GamePlayerModel): [GamePlayerModel, GamePlayerModel] {// Distribution des cartes aux joueurs
     const halfDeck: number = Math.ceil(cards.length / 2);
     const player1Deck: Card[] = cards.slice(0, halfDeck);
     const player2Deck: Card[] = cards.slice(halfDeck);
 
-    const player1: GamePlayerModel = new GamePlayerModel(player1Name, player1Deck);
-    const player2: GamePlayerModel = new GamePlayerModel(player2name, player2Deck);
+    const player1: GamePlayerModel = new GamePlayerModel(gamePlayer1.id, gamePlayer1.name, player1Deck);
+    const player2: GamePlayerModel = new GamePlayerModel(gamePlayer2.id, gamePlayer2.name, player2Deck);
 
     return [player1, player2];
   }

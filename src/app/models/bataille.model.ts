@@ -22,11 +22,13 @@ export interface Card {
 }
 
 export class GamePlayerModel {
+  id: number;
   name: string;
   cards: Card[];
   score: number;
 
-  constructor(name: string, cards: Card[]) {
+  constructor(id: number, name: string, cards: Card[]) {
+    this.id = id;
     this.name = name;
     this.cards = cards;
     this.score = 0;
@@ -35,4 +37,10 @@ export class GamePlayerModel {
 
 export interface DialogData {
   equality: boolean;
+}
+
+
+export enum PlayerNumber {
+  PLAYER1 = 'player1',
+  PLAYER2 = 'player2'
 }

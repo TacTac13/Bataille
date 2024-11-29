@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Card, GamePlayerModel, PlayerModel, ScoresModel } from '../../models/bataille.model';
+import { Card, GamePlayerModel, PlayerModel, PlayerNumber, ScoresModel } from '../../models/bataille.model';
 import { CardService } from '../../services/cardService.service'
-import { filter } from 'rxjs';
+import { combineLatest, filter } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { EndGameModalComponent } from '../../components/endGameModal/endGameModal.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -19,8 +19,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class GameComponent implements OnInit {
 
-  player1Id!: number | undefined;
-  player2Id!: number | undefined;
   playersList!: PlayerModel[];
   player1!: GamePlayerModel;
   player2!: GamePlayerModel;
@@ -46,25 +44,33 @@ export class GameComponent implements OnInit {
     this.cardService.winner$.pipe(filter(Boolean))
       .subscribe(winner => {
         this.winner = winner;
-        if (this.player1Id && this.player2Id) {
+        if (this.player1.id && this.player2.id) {
           const newScores: ScoresModel[] = [
             {
-              playerId: this.player1Id,
+              playerId: this.player1.id,
               score: this.player1.score
             },
             {
-              playerId: this.player2Id,
+              playerId: this.player2.id,
               score: this.player2.score
             }
           ]
           this.store.dispatch(new BattleActions.AddScores(newScores));
         };
       })
-    this.store.select(BattleState.players).subscribe(players => {
+
+    combineLatest([
+      this.store.select(BattleState.players),
+      this.store.select(BattleState.player1),
+      this.store.select(BattleState.player2),
+    ]).subscribe(([players, player1, player2]) => {
       this.playersList = players;
-      this.player1Id = players.find(player => player.name === this.playersForm.controls.player1.value)?.id;
-      this.player2Id = players.find(player => player.name === this.playersForm.controls.player2.value)?.id;
-    });
+      if (player1 && player2) {
+        [this.player1, this.player2] = this.cardService.deal(this.deck, player1, player2);
+        this.store.dispatch(new LoadingActions.SetPlayersLoading(false))
+      }
+    })
+
     this.store.select(LoadingState.playersLoading).subscribe(isPlayersLoading => this.isPlayersLoading = isPlayersLoading);
   }
 
@@ -73,7 +79,7 @@ export class GameComponent implements OnInit {
     this.cardPlayer2 = null;
     this.cardService.winnerSubject.next(null);
     this.deck = this.cardService.createDeck();
-    [this.player1, this.player2] = this.cardService.deal(this.deck, this.player1.name, this.player2.name);
+    [this.player1, this.player2] = this.cardService.deal(this.deck, this.player1, this.player2);
   }
 
   playRound() {
@@ -119,10 +125,9 @@ export class GameComponent implements OnInit {
       if (!isPlayer1Exist && !isPlayer2Exist) {
         this.store.dispatch([
           new LoadingActions.SetPlayersLoading(true),
-          new BattleActions.AddPlayer({ name: player1Name }),
-          new BattleActions.AddPlayer({ name: player2Name }),
-        ]).subscribe(() => this.store.dispatch(new LoadingActions.SetPlayersLoading(false)));
-        [this.player1, this.player2] = this.cardService.deal(this.deck, player1Name, player2Name);
+          new BattleActions.AddPlayer({ name: player1Name }, PlayerNumber.PLAYER1),
+          new BattleActions.AddPlayer({ name: player2Name }, PlayerNumber.PLAYER2),
+        ]).subscribe();
       }
     }
   }
